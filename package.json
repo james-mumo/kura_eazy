@@ -1,0 +1,11 @@
+{
+  "name": "kura_eazy-full",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cd kura_back && yarn run dev & cd kura_eazy && yarn run dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
