@@ -6,7 +6,9 @@ const UnAuthHeader = () => {
     <nav
       className="bg-gradient-to-r from-blue-400 to-blue-600 flex justify-between items-center py-4 px-8 sticky top-0 z-10"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
-      <div className="text-lg font-bold text-white">CSP TimeTabler</div>
+      <Link to="/" className="text-white hover:text-gray-300">
+        <div className="text-lg font-bold text-white">CSP TimeTabler</div>
+      </Link>
       <div className="flex space-x-4">
         <Link to="/" className="text-white hover:text-gray-300">
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
