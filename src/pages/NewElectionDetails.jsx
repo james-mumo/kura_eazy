@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from "react"
-import Sidebar from "../components/Sidebar"
-import Navbar from "../components/Navbar"
-import apiList from "../lib/apiList"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import checkIsAuth from "../lib/isAuth"
 import { appContext } from "../context/appContext"
-import axios from "axios"
 import Chip from "@mui/material/Chip"
+import { ref, set } from "firebase/database"
+import { firebaseDB } from "../firebase-config"
 
 const NewElectionDetails = () => {
+  const navigateTo = useNavigate()
   const [currentUser, setCurrentUser] = useState({})
   const [startDateTime, setStartDateTime] = useState(new Date())
   const [endDateTime, setEndDateTime] = useState(new Date())
 
+  const itemAdmin = useSelector((state) => state.user.userEmail)
+
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("user")))
-    setItemDetails({ ...itemDetails, itemAdmin: currentUser._id })
+    setItemDetails({ ...itemDetails, itemAdmin: itemAdmin })
   }, [0])
 
   const [chips, setChips] = useState([])
@@ -31,9 +32,6 @@ const NewElectionDetails = () => {
   const handleDeleteChip = (chipToDelete) => {
     setChips((chips) => chips.filter((chip) => chip !== chipToDelete))
   }
-
-  const navigateTo = useNavigate()
-  const {} = useContext(appContext)
 
   const [posViedItem, setPosViedItem] = useState("")
   const [itemDetails, setItemDetails] = useState({
@@ -62,26 +60,38 @@ const NewElectionDetails = () => {
     setPosViedItem("")
   }
 
-  const handleItemSubmit = (e) => {
+  const handleItemSubmit = async (e) => {
     e.preventDefault()
     setIsError(false)
     console.log(itemDetails)
     if (!(itemDetails.itemTitle || itemDetails.itemDesc)) {
       setIsError(true)
     } else {
-      axios
-        .post(apiList.addElection, itemDetails)
-        .then((response) => {
-          // console.log("Added Succesfully", response.data)
-          if (response.status == 201) {
-            localStorage.removeItem("electionItem")
-            localStorage.setItem("electionItem", JSON.stringify(response.data))
-            navigateTo("/candidates")
-          }
+      // const response = await signInWithEmailAndPassword(
+      //   appAuth,
+      //   formData.email,
+      //   formData.password
+      // )
+      set(ref(firebaseDB, "elections/" + itemDetails.itemTitle), itemDetails)
+        .then((res) => {
+          navigateTo("/dashboard")
         })
         .catch((error) => {
-          console.error("Error adding new election:", error)
+          // The write failed...
         })
+      // axios
+      //   .post(apiList.addElection, itemDetails)
+      //   .then((response) => {
+      //     // console.log("Added Succesfully", response.data)
+      //     if (response.status == 201) {
+      //       localStorage.removeItem("electionItem")
+      //       localStorage.setItem("electionItem", JSON.stringify(response.data))
+      //       navigateTo("/candidates")
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error adding new election:", error)
+      //   })
     }
   }
 

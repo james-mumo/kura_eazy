@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
   isAuthenticated: false,
   userEmail: "",
+  electionAdded: [],
+  isAdmin:true,
 }
 
 const userSlice = createSlice({
