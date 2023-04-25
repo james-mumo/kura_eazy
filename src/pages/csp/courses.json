@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Maths",
+    "lecturerId": 1,
+    "roomId": 2,
+    "timeSlots": [1, 2]
+  },
+  {
+    "id": 2,
+    "name": "Physics",
+    "lecturerId": 1,
+    "roomId": 3,
+    "timeSlots": [3, 4]
+  },
+  {
+    "id": 3,
+    "name": "English",
+    "lecturerId": 2,
+    "roomId": 1,
+    "timeSlots": [1, 3]
+  },
+  {
+    "id": 4,
+    "name": "History",
+    "lecturerId": 2,
+    "roomId": 2,
+    "timeSlots": [2, 4]
+  }
+]
